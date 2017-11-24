@@ -8,15 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon/favicon.ico">
 
     <title>Highland: Index</title>
 
     <!-- CSS Plugins -->
-    <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="${pageContext.request.contextPath}/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" >
 
     <!-- CSS Global -->
-    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/styles.css" rel="stylesheet">
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600italic,600,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
@@ -40,13 +40,13 @@
     
     <!-- JS Global -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     
     <!-- JS Plugins -->
-    <script src="assets/plugins/scrolltopcontrol/scrolltopcontrol.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/plugins/scrolltopcontrol/scrolltopcontrol.js"></script>
     
     <!-- JS Custom -->
-    <script src="assets/js/custom.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/custom.js"></script>
 
   </body>
 </html>
