@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <nav class="navbar navbar-default">
       <div class="container">
 
@@ -66,7 +67,7 @@
               <a href="sign-in.html"><i class="fa fa-lock"></i> <span class="hidden-md">Sign In</span></a>
             </li>
             <li>
-              <a href="sign-up.html"><i class="fa fa-user"></i> <span class="hidden-md">Sign Up</span></a>
+              <a href="${pageContext.request.contextPath}/users/register"><i class="fa fa-user"></i> <span class="hidden-md">Sign Up</span></a>
             </li>
           </ul>
 

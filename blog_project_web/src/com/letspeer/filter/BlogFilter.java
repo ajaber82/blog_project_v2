@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet Filter implementation class LoginFilter
+ * Servlet Filter implementation class BlogFilter
  */
-@WebFilter("/users")
-public class LoginFilter implements Filter {
+@WebFilter("/*")
+public class BlogFilter implements Filter {
 
     /**
      * Default constructor. 
-     */
-    public LoginFilter() {
+     */ 
+    public BlogFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -35,15 +35,23 @@ public class LoginFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
+	   
+	   HttpServletRequest servletRquest = (HttpServletRequest) request ; 
+	   HttpServletResponse servletResponse = (HttpServletResponse) response ; // we cast the types 
+	   String path = servletRquest.getRequestURI(); 
+	   if(servletRquest.getMethod().equalsIgnoreCase("get") && !path.contains("login") && !path.contains("registert")) {
+		   servletRquest.getSession().setAttribute("LAST_URL", path);
+	   }
+	   if(path.contains("/assets/")) {
+		   chain.doFilter(request, response);
+	   }
 
-		// pass the request along the filter chain
-		HttpServletRequest servletRequest = (HttpServletRequest) request ; 
-		HttpServletResponse servletResponse = (HttpServletResponse) response ; 
-		if(servletRequest.getSession().getAttribute("user")==null) {
-			servletResponse.sendRedirect("http://www.google.com");
-		}
+	   if(path.endsWith("/blog/new-blog") || path.endsWith("/users/profile/edit-profile")) {
+		   if(servletRquest.getSession().getAttribute("current_user") == null) {
+			   servletResponse.sendRedirect("http://www.google.com");
+		   }
+	   }
+	   	
 		chain.doFilter(request, response);
 	}
 
