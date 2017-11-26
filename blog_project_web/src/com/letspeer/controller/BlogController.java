@@ -1,6 +1,8 @@
 package com.letspeer.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,17 +16,19 @@ import org.apache.tiles.request.Request;
 import org.apache.tiles.request.servlet.ServletRequest;
 import org.apache.tiles.request.servlet.ServletUtil;
 
+import com.letspeer.util.BlogUtil;
+
 /**
  * Servlet implementation class HomeController
  */
-@WebServlet("/")
-public class HomeController extends HttpServlet {
+@WebServlet("/home")
+public class BlogController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public HomeController() {
+	public BlogController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -35,12 +39,17 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ApplicationContext applicationContext = ServletUtil.getApplicationContext(this.getServletContext());
-		TilesContainer container = TilesAccess.getContainer(applicationContext);
+//		ApplicationContext applicationContext = ServletUtil.getApplicationContext(this.getServletContext());
+//		TilesContainer container = TilesAccess.getContainer(applicationContext);
+//		
+//		ServletRequest servletRequest = new ServletRequest(applicationContext, request, response);
+//		servletRequest.getRequest().setAttribute("MSG", "Za3al W Khadra");
+//		container.render("index", servletRequest);
 		
-		ServletRequest servletRequest = new ServletRequest(applicationContext, request, response);
-		servletRequest.getRequest().setAttribute("MSG", "Za3al W Khadra");
-		container.render("index", servletRequest);
+		HashMap<String, Object> tt = new HashMap<String, Object>() ; 
+		tt.put("MSG", "abdullah");
+		
+		BlogUtil.RenderPage("index", tt, request, response);
 	}
 
 }

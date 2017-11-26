@@ -17,4 +17,8 @@
     <definition name="index" extends="base.definition">
         <put-attribute name="content" value="/views/index.jsp" />
     </definition>
+    
+    <definition name="userRegister" extends="base.definition">
+        <put-attribute name="content" value="/views/register-new-user.jsp" />
+    </definition>
 </tiles-definitions>
