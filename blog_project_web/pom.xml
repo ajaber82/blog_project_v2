@@ -5,6 +5,8 @@
 	<artifactId>blog_project_web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	
+	
 
 	<parent>
             <groupId>com.letspeer</groupId>
@@ -55,6 +57,8 @@
 			<version>${jsp.api.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		
+
 
 
 	</dependencies>
