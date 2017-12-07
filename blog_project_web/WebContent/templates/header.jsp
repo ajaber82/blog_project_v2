@@ -64,7 +64,7 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="sign-in.html"><i class="fa fa-lock"></i> <span class="hidden-md">Sign In</span></a>
+              <a href="${pageContext.request.contextPath}/users/login"><i class="fa fa-lock"></i> <span class="hidden-md">Sign In</span></a>
             </li>
             <li>
               <a href="${pageContext.request.contextPath}/users/register"><i class="fa fa-user"></i> <span class="hidden-md">Sign Up</span></a>

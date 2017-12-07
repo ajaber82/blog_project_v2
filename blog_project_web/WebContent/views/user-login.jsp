@@ -4,14 +4,14 @@
 		<div class="row">
 			<div class="col-sm-4">
 
-				<h3>Sign Up</h3>
+				<h3>Sign In</h3>
 
 			</div>
 			<div class="col-sm-8 hidden-xs">
 
 				<ol class="breadcrumb">
 					<li><a href="#">Home</a></li>
-					<li class="active">Sign Up</li>
+					<li class="active">Sign In</li>
 				</ol>
 
 			</div>
@@ -48,15 +48,7 @@
 					 </div>
 				</c:if>
 
-				<form action="${pageContext.request.contextPath}/users/register" method="POST">
-					<div class="form-group">
-						<label class="sr-only">First name</label> <input name="txtFirstName" type="text" required
-							class="form-control input-lg" placeholder="First name">
-					</div>
-					<div class="form-group">
-						<label class="sr-only">Last name</label> <input name="txtLastName" type="text" required
-							class="form-control input-lg" placeholder="Last name">
-					</div>
+				<form action="${pageContext.request.contextPath}/users/login" method="POST">
 					<div class="form-group">
 						<label class="sr-only">E-mail</label> <input name="txtEmail" type="email" required
 							class="form-control input-lg" placeholder="E-mail">
@@ -68,31 +60,16 @@
 									class="form-control input-lg" placeholder="Password">
 							</div>
 						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="sr-only">Repeat password</label> <input name="txtConfirmPassword" required
-									type="password" class="form-control input-lg"
-									placeholder="Repeat password">
-							</div>
-						</div>
-					</div>
-					<div class="checkbox">
-						<input type="checkbox" id="profile-sign-in__remember" value="">
-						<label for="profile-sign-in__remember"> I agree to the <a
-							href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-						</label>
 					</div>
 					<br />
-					<button type="submit" class="btn btn-lg btn-primary">Sign
-						Up</button>
+					<button type="submit" class="btn btn-lg btn-primary">Login</button>
 				</form>
 
 				<hr>
 
 				<p>
-					Already registered? <a href="sign-in.html">Sign in to your
-						account</a>.
-				</p>
+	              Not registered? <a href="${pageContext.request.contextPath}/users/register">Create an account</a>.
+	            </p>
 
 			</div>
 			<!-- / .profile_sign-in -->

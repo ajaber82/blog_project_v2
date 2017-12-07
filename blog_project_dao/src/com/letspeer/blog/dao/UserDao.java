@@ -11,7 +11,8 @@ public interface UserDao extends BaseDao {
 	public List<User> getUsers(Integer startRow, Integer rowCount);
 	public List<User> getUsers() ; 
 	public Boolean updateUser(User user) ; 
-	public void deleteUser(Integer id) ; 
+	public void deleteUser(Integer id) ;
+	public User getUserByEmail(String email); 
 	
 
 }

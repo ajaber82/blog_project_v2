@@ -138,6 +138,52 @@ public class UserDaoImpl implements UserDao {
 
 		return null;
 	}
+	
+	
+	@Override
+	public User getUserByEmail(String email) {
+		ResultSet result = null;
+		System.out.println("<<<<<< In GET USER BY EMAIL >>>>" + email);
+		try {
+			String query = "SELECT * FROM users WHERE email=? AND deleted='0'";
+			connectDb();
+			PreparedStatement pStmt = connection.prepareStatement(query);
+			pStmt.setString(1, email);
+			result = pStmt.executeQuery();
+			if (result.next()) {
+				User user = new User();
+				user.setAboutMe(result.getString("about_me"));
+				user.setDeleted(result.getString("deleted").equals('0') ? false : true);
+				user.setEmail(result.getString("email"));
+				user.setFirstName(result.getString("first_name"));
+				user.setId(result.getInt("id"));
+				user.setLastName(result.getString("last_name"));
+				user.setProfilePicture(result.getString("profile_picture"));
+				String pwd = result.getString("password") ; 
+				System.out.println(pwd + ">>>>>>>>> !");
+				user.setPassword(pwd);
+				return user;
+
+			} else {
+				return null;
+			}
+
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			if (result != null) {
+				try {
+					result.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			disconnectDb();
+		}
+
+		return null;
+	}
+
 
 	@Override
 	public List<User> getUsers(Integer startRow, Integer rowCount) {

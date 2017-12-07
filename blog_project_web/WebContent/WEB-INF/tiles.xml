@@ -21,4 +21,8 @@
     <definition name="userRegister" extends="base.definition">
         <put-attribute name="content" value="/views/register-new-user.jsp" />
     </definition>
+    
+     <definition name="userLogin" extends="base.definition">
+        <put-attribute name="content" value="/views/user-login.jsp" />
+    </definition>
 </tiles-definitions>
