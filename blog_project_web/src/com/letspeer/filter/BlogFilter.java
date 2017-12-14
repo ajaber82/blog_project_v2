@@ -39,7 +39,7 @@ public class BlogFilter implements Filter {
 	   HttpServletRequest servletRquest = (HttpServletRequest) request ; 
 	   HttpServletResponse servletResponse = (HttpServletResponse) response ; // we cast the types 
 	   String path = servletRquest.getRequestURI(); 
-	   if(servletRquest.getMethod().equalsIgnoreCase("get") && !path.contains("login") && !path.contains("registert")) {
+	   if(servletRquest.getMethod().equalsIgnoreCase("get") && !path.contains("login") && !path.contains("register")) {
 		   servletRquest.getSession().setAttribute("LAST_URL", path);
 	   }
 	   if(path.contains("/assets/")) {
@@ -47,8 +47,8 @@ public class BlogFilter implements Filter {
 	   }
 
 	   if(path.endsWith("/blog/new-blog") || path.endsWith("/users/profile/edit-profile")) {
-		   if(servletRquest.getSession().getAttribute("current_user") == null) {
-			   servletResponse.sendRedirect("http://www.google.com");
+		   if(servletRquest.getSession().getAttribute("user") == null) {
+			   servletResponse.sendRedirect(servletRquest.getContextPath() + "/users/login");
 		   }
 	   }
 	   	

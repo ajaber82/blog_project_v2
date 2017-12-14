@@ -145,7 +145,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 				Category category = new Category();
 				category.setId(result.getInt("id"));
-				category.setCategoryName("category_name");
+				category.setCategoryName(result.getString("category_name"));
 				category.setDeleted(result.getString("deleted").equals('0') ? false : true);
 
 				ls.add(category);

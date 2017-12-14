@@ -25,4 +25,9 @@
      <definition name="userLogin" extends="base.definition">
         <put-attribute name="content" value="/views/user-login.jsp" />
     </definition>
+    
+    <definition name="newBlog" extends="base.definition">
+        <put-attribute name="content" value="/views/blog-post.jsp" />
+    </definition>
+    
 </tiles-definitions>

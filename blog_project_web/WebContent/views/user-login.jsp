@@ -53,14 +53,13 @@
 						<label class="sr-only">E-mail</label> <input name="txtEmail" type="email" required
 							class="form-control input-lg" placeholder="E-mail">
 					</div>
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label class="sr-only">Password</label> <input name="txtPassword" type="password" required
+					
+					<div class="form-group">
+					    <label class="sr-only">Password</label> <input name="txtPassword" type="password" required
 									class="form-control input-lg" placeholder="Password">
-							</div>
-						</div>
-					</div>
+				    </div>
+						
+					
 					<br />
 					<button type="submit" class="btn btn-lg btn-primary">Login</button>
 				</form>

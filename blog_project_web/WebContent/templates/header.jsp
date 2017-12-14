@@ -61,15 +61,33 @@
             </li>
             <li><a href="ui-elements.html">UI elements</a></li>
           </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="${pageContext.request.contextPath}/users/login"><i class="fa fa-lock"></i> <span class="hidden-md">Sign In</span></a>
-            </li>
-            <li>
-              <a href="${pageContext.request.contextPath}/users/register"><i class="fa fa-user"></i> <span class="hidden-md">Sign Up</span></a>
-            </li>
-          </ul>
+          <c:choose>
+             <c:when test="${sessionScope.user == null}">
+	          <ul class="nav navbar-nav navbar-right">
+		            <li>
+		              <a href="${pageContext.request.contextPath}/users/login"><i class="fa fa-lock"></i> <span class="hidden-md">Sign In</span></a>
+		            </li>
+		            <li>
+		              <a href="${pageContext.request.contextPath}/users/register"><i class="fa fa-user"></i> <span class="hidden-md">Sign Up</span></a>
+		            </li>
+		          </ul>
+	          </c:when>
+	          <c:otherwise>
+	          		<ul class="nav navbar-nav navbar-right">
+	          		    <li class="dropdown">
+			              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome ${sessionScope.user.firstName}, ${sessionScope.user.lastName} <span class="caret"></span></a>
+			              <ul class="dropdown-menu">
+			                <li><a href="about-us.html">Profile</a></li>
+			                <li><a href="contact.html">Edit my profile</a></li>
+			                <li><a href="${pageContext.request.contextPath}/blog/new-blog">Post new blog</a></li>
+			                <li><a href="${pageContext.request.contextPath}/users/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+			              </ul>
+			            </li>
+	          		</ul>
+	             
+	              
+	          </c:otherwise>
+          </c:choose>
 
           <form class="navbar-form navbar-search navbar-right">
             <div class="form-group">

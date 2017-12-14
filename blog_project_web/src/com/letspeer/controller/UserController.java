@@ -58,6 +58,11 @@ public class UserController extends HttpServlet {
 		if (path.endsWith("/users/login") || path.endsWith("/users/login/")) {
 			BlogUtil.RenderPage("userLogin", null, request, response);
 		}
+		
+		if (path.endsWith("/users/logout") || path.endsWith("/users/logout/")) {
+			request.getSession().removeAttribute("user");
+			response.sendRedirect(request.getHeader("referer")) ; 
+		}
 	}
 
 	/**
@@ -104,6 +109,12 @@ public class UserController extends HttpServlet {
 			if (!BlogUtil.validate(email)) {
 				errorList.add("Please enter valid email address");
 			}
+			
+			User uExist = dao.getUserByEmail(email) ; 
+			
+			if(uExist!=null) {
+				errorList.add("User with this email is exist");
+			}
 
 			if (errorList.size() > 0) {
 				HashMap<String, Object> hm = new HashMap<String, Object>();
@@ -111,6 +122,8 @@ public class UserController extends HttpServlet {
 				BlogUtil.RenderPage("userRegister", hm, request, response);
 
 			}
+			
+			
 
 			User u = new User();
 			u.setAboutMe("");
@@ -120,6 +133,8 @@ public class UserController extends HttpServlet {
 			u.setLastName(lastName);
 			u.setPassword(password);
 			u.setProfilePicture("");
+			
+			
 
 			int uid = dao.addUser(u);
 
