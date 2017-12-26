@@ -15,6 +15,7 @@ import com.letspeer.blog.dao.UserDao;
 import com.letspeer.blog.dao.impl.UserDaoImpl;
 import com.letspeer.blog.model.User;
 import com.letspeer.util.BlogUtil;
+import com.letspeer.util.EmailUtility;
 
 /**
  * Servlet implementation class UserController
@@ -28,6 +29,10 @@ public class UserController extends HttpServlet {
 	 */
 
 	private UserDao dao;
+	private String smtpUserName ; 
+	private String smtpUserPassword ; 
+	private String smtpHost ; 
+	private String smtpPort ; 
 
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -35,6 +40,11 @@ public class UserController extends HttpServlet {
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 
 		dao = new UserDaoImpl(jdbcURL, jdbcUsername, jdbcPassword);
+		
+		this.smtpHost = getServletContext().getInitParameter("host") ; 
+		this.smtpPort = System.getenv("SMTP_PORT") ; 
+		this.smtpUserName = System.getenv("SMTP_USERNAME");
+		this.smtpUserPassword = System.getenv("SMTP_PASSWORD");
 
 	}
 
@@ -139,6 +149,13 @@ public class UserController extends HttpServlet {
 			int uid = dao.addUser(u);
 
 			if (uid > 0) {
+				try {
+				String message = EmailUtility.createHTMLEmail(firstName, lastName) ; 
+	            EmailUtility.sendEmail(this.smtpHost,this.smtpPort, 
+	            		this.smtpUserName, this.smtpUserPassword, email, "Your letspeer.com account confirmation", message);
+				}catch(Exception exp) {
+					exp.printStackTrace(); 
+				}
 				HashMap<String, Object> result = new HashMap<String, Object>();
 				result.put("message", "Thank you for registering in our site please check your email");
 				BlogUtil.RenderPage("userRegister", result, request, response);

@@ -50,6 +50,7 @@ public class BlogFilter implements Filter {
 		   if(servletRquest.getSession().getAttribute("user") == null) {
 			   servletResponse.sendRedirect(servletRquest.getContextPath() + "/users/login");
 		   }
+		   //add new if for activation
 	   }
 	   	
 		chain.doFilter(request, response);

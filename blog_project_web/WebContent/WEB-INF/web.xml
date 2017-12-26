@@ -16,7 +16,13 @@
         <param-name>jdbcPassword</param-name>
         <param-value>12345678</param-value>
     </context-param>
-  
+    
+    <context-param>
+		<param-name>host</param-name>
+		<param-value>smtp.gmail.com</param-value>
+	</context-param>
+
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
