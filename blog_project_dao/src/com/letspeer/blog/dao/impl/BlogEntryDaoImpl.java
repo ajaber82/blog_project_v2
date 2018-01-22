@@ -9,10 +9,13 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.letspeer.blog.dao.BlogEntryDao;
 import com.letspeer.blog.model.BlogEntry;
+import com.letspeer.blog.model.BlogEntryDetails;
+import com.letspeer.blog.model.Tag;
 
 public class BlogEntryDaoImpl implements BlogEntryDao {
 
@@ -231,6 +234,114 @@ public class BlogEntryDaoImpl implements BlogEntryDao {
 		be.setDeleted(true);
 		updateBlogEntry(be);
 
+	}
+
+	@Override
+	public BlogEntryDetails getBlogEntryDetailes(Integer id) {
+		ResultSet result = null;
+		BlogEntryDetails bed=null;
+		try {
+			String query = "SELECT be.id,  " + 
+		            "       be.blog_title, " +
+					"       be.blog_body,  " + 
+					"       be.cat_id,  " + 
+					"       be.user_id,  " + 
+					"       be.deleted,  " + 
+					"       be.created_time,  " + 
+					"       c.category_name,  " + 
+					"       u.first_name,  " + 
+					"       u.last_name,  " + 
+					"       u.profile_picture,  " + 
+					"       Count(com.id)                 AS comments_count,  " + 
+					"       Group_concat(outer1.tag_id)   tag_ids,  " + 
+					"       Group_concat(outer1.tag_name) tag_names  " + 
+					"FROM   blog_entries AS be  " + 
+					"       LEFT OUTER JOIN comments com  " + 
+					"                    ON com.blog_id = be.id  " + 
+					"                       AND be.deleted = '0'  " + 
+					"       LEFT OUTER JOIN (SELECT ref.blog_id,  " + 
+					"                               ref.tag_id,  " + 
+					"                               tg.tag_name  " + 
+					"                        FROM   blog_entries_tags_ref ref,  " + 
+					"                               tags tg,  " + 
+					"                               blog_entries bee  " + 
+					"                        WHERE  bee.id = ref.blog_id  " + 
+					"                               AND tg.id = ref.tag_id) AS outer1  " + 
+					"                    ON outer1.blog_id = be.id  " + 
+					"       INNER JOIN categories c  " + 
+					"               ON be.cat_id = c.id  " + 
+					"       INNER JOIN users u  " + 
+					"               ON be.user_id = u.id  " + 
+					"WHERE  be.id = ? " + 
+					"GROUP  BY be.id;  ";
+			connectDb();
+			PreparedStatement pStmt = connection.prepareStatement(query);
+			pStmt.setInt(1, id);
+			
+			result = pStmt.executeQuery();
+			while (result.next()) {
+				 bed = new BlogEntryDetails();
+		         bed.setBlogBody(result.getString("blog_body"));
+		         bed.setBlogTitle(result.getString("blog_title"));
+		         bed.setCategoryName(result.getString("category_name"));
+		         bed.setCatId(result.getInt("cat_id"));
+		         bed.setCommentsCount(result.getInt("comments_count"));
+		         bed.setCreatedTime(result.getLong("created_time"));
+		         bed.setDeleted(result.getString("deleted").equals('0') ? false : true);
+		         bed.setFirstName(result.getString("first_name"));
+		         bed.setId(result.getInt("id"));
+		         bed.setLastName(result.getString("last_name"));
+		         bed.setProfilePicture(result.getString("profile_picture"));
+		         String tagIds= result.getString("tag_ids") == null ? "":result.getString("tag_ids");
+		         String tagNames = result.getString("tag_names") == null ? "":result.getString("tag_names");
+		         List<Tag> ls = new ArrayList<Tag>() ; 
+		         
+		         if(tagIds!="" && tagNames!="") {
+		        	 String[] lsIds = tagIds.split(",") ; 
+		        	 String [] lsNames = tagNames.split(",") ; 
+		        	 
+//		        	 HashMap<Integer, String> ht = new HashMap<>() ; 
+//		        	 
+//		        	 for(int i = 0 ; i<lsIds.length; i++) {
+//		        		 ht.put(Integer.parseInt(lsIds[i]), lsNames[i]) ; 
+//		        	 }
+//		        	 
+//		        	 bed.setTags(ht);
+		        	 
+		        	
+		        	 
+		        	 for(int i=0; i<lsIds.length; i++) {
+		        		 Tag tag = new Tag() ; 
+		        		 tag.setId(Integer.parseInt(lsIds[i]));
+		        		 tag.setTagName(lsNames[i]);
+		        		 ls.add(tag) ; 
+		        	 } 
+		        	 	        	 
+		         }
+		         bed.setTags(ls);
+		         
+		         bed.setUserId(result.getInt("user_id"));
+		         break;
+		         
+		         
+			}
+
+			return bed;
+
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			if (result != null) {
+				try {
+					result.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			disconnectDb();
+		}
+
+		return bed;
 	}
 
 }

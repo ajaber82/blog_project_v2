@@ -383,91 +383,32 @@
         <div class="col-sm-12">
           
           <h1 class="block-header">
-            <span>Recent Works</span>
+            <span>Recent Blog</span>
           </h1>
 
         </div>
       </div> <!-- / .row -->
       <div class="row">
-        <div class="col-sm-3">
-          
-          <a href="gallery-item.html" class="thumbnail">
-            <img src="assets/img/work_1.jpg" alt="...">
-            <div class="caption">
-              <h5>Project Title</h5>
-              <ul class="rating">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-              </ul>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </div>
-          </a>
-
-        </div>
-        <div class="col-sm-3">
-          
-          <a href="gallery-item.html" class="thumbnail">
-            <img src="assets/img/work_2.jpg" alt="...">
-            <div class="caption">
-              <h5>Project Title</h5>
-              <ul class="rating">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-              </ul>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </div>
-          </a>
-
-        </div>
-        <div class="col-sm-3">
-          
-          <a href="gallery-item.html" class="thumbnail">
-            <img src="assets/img/work_3.jpg" alt="...">
-            <div class="caption">
-              <h5>Project Title</h5>
-              <ul class="rating">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-              </ul>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </div>
-          </a>
-
-        </div>
-        <div class="col-sm-3">
-          
-          <a href="gallery-item.html" class="thumbnail">
-            <img src="assets/img/work_4.jpg" alt="...">
-            <div class="caption">
-              <h5>Project Title</h5>
-              <ul class="rating">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-              </ul>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </div>
-          </a>
-
-        </div>
+        <c:forEach var="blog" items="${top20Blog }">
+	        <div class="col-sm-3">
+	          <a href="${pageContext.request.contextPath}/blog/${blog.id}/detail/${blog.blogTitle}" class="thumbnail">
+	            <img src="assets/img/work_1.jpg" alt="${blog.blogTitle}">
+	            <div class="caption">
+	              <h5>${blog.blogTitle}</h5>
+	              <ul class="rating">
+	                <li><i class="fa fa-star"></i></li>
+	                <li><i class="fa fa-star"></i></li>
+	                <li><i class="fa fa-star"></i></li>
+	                <li><i class="fa fa-star"></i></li>
+	                <li><i class="fa fa-star"></i></li>
+	              </ul>
+	              <p>
+	               ${blog.blogSummary}
+	              </p>
+	            </div>
+	          </a>
+	
+	        </div>
+        </c:forEach>
       </div>
     </div> <!-- / .container -->

@@ -1,17 +1,14 @@
-package com.letspeer.blog.model;
+package com.letspeer.dto;
 
-public class BlogEntry    {
-
+public class BlogEntryDTO {
+	
 	private Integer id;
 	private String blogTitle;
-	private String blogBody;
+	private String blogSummary;
 	private Integer catId;
 	private Integer userId;
 	private Long createdTime;
 	private Boolean deleted;
-	
-	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -24,11 +21,11 @@ public class BlogEntry    {
 	public void setBlogTitle(String blogTitle) {
 		this.blogTitle = blogTitle;
 	}
-	public String getBlogBody() {
-		return blogBody;
+	public String getBlogSummary() {
+		return blogSummary;
 	}
-	public void setBlogBody(String blogBody) {
-		this.blogBody = blogBody;
+	public void setBlogSummary(String blogSummary) {
+		this.blogSummary = blogSummary;
 	}
 	public Integer getCatId() {
 		return catId;
@@ -54,6 +51,8 @@ public class BlogEntry    {
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
-
 	
+	
+	
+
 }

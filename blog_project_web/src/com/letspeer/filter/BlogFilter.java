@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.letspeer.config.BlogConstants;
+
 /**
  * Servlet Filter implementation class BlogFilter
  */
@@ -39,18 +41,19 @@ public class BlogFilter implements Filter {
 	   HttpServletRequest servletRquest = (HttpServletRequest) request ; 
 	   HttpServletResponse servletResponse = (HttpServletResponse) response ; // we cast the types 
 	   String path = servletRquest.getRequestURI(); 
-	   if(servletRquest.getMethod().equalsIgnoreCase("get") && !path.contains("login") && !path.contains("register")) {
-		   servletRquest.getSession().setAttribute("LAST_URL", path);
-	   }
 	   if(path.contains("/assets/")) {
 		   chain.doFilter(request, response);
 	   }
+	   
+	   if(servletRquest.getMethod().equalsIgnoreCase("get") && !path.contains("login") && !path.contains("register") && !path.contains("/assets/")) {
+		   servletRquest.getSession().setAttribute("LAST_URL", path);
+	   }
+	   
 
 	   if(path.endsWith("/blog/new-blog") || path.endsWith("/users/profile/edit-profile")) {
-		   if(servletRquest.getSession().getAttribute("user") == null) {
+		   if(servletRquest.getSession().getAttribute(BlogConstants.USER_SESSION_NAME) == null) {
 			   servletResponse.sendRedirect(servletRquest.getContextPath() + "/users/login");
 		   }
-		   //add new if for activation
 	   }
 	   	
 		chain.doFilter(request, response);

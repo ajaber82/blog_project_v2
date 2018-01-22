@@ -1,7 +1,9 @@
 package com.letspeer.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +18,11 @@ import org.apache.tiles.request.Request;
 import org.apache.tiles.request.servlet.ServletRequest;
 import org.apache.tiles.request.servlet.ServletUtil;
 
-
+import com.letspeer.blog.dao.BlogEntryDao;
+import com.letspeer.blog.dao.impl.BlogEntryDaoImpl;
+import com.letspeer.blog.dao.impl.CategoryDaoImpl;
+import com.letspeer.blog.model.BlogEntry;
+import com.letspeer.dto.BlogEntryDTO;
 import com.letspeer.util.BlogUtil;
 
 /**
@@ -26,6 +32,13 @@ import com.letspeer.util.BlogUtil;
 public class BlogHomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private BlogEntryDao blogDao ; 
+	public void init() {
+		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
+		String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
+		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
+		blogDao = new BlogEntryDaoImpl(jdbcURL, jdbcUsername, jdbcPassword);
+	}
 	
 
 	/**
@@ -42,17 +55,33 @@ public class BlogHomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		ApplicationContext applicationContext = ServletUtil.getApplicationContext(this.getServletContext());
-//		TilesContainer container = TilesAccess.getContainer(applicationContext);
-//		
-//		ServletRequest servletRequest = new ServletRequest(applicationContext, request, response);
-//		servletRequest.getRequest().setAttribute("MSG", "Za3al W Khadra");
-//		container.render("index", servletRequest);
 		
-		HashMap<String, Object> tt = new HashMap<String, Object>() ; 
-		tt.put("MSG", "abdullah");
+		HashMap<String, Object> homeMap = new HashMap<String, Object>() ; 
 		
-		BlogUtil.RenderPage("index", tt, request, response);
+		List<BlogEntry> blogs = this.blogDao.getBlogEntries(0, 20) ; 
+		
+		
+		//List<BlogEntry> blog = new ArrayList <BlogEntry>();
+		List<BlogEntryDTO> blogdtos = new ArrayList<BlogEntryDTO>();
+		
+		for (BlogEntry be : blogs) {
+			BlogEntryDTO dto = new BlogEntryDTO();
+			dto.setBlogTitle(be.getBlogTitle());
+			dto.setBlogSummary(be.getBlogBody().length()>20?be.getBlogBody().substring(0, 20) : 
+				be.getBlogBody());
+			dto.setCatId(be.getCatId());
+			dto.setId(be.getId());
+			
+			blogdtos.add(dto) ; 
+		}
+		
+		
+		
+		
+		
+		homeMap.put("MSG", "Welcome to our blog!");
+		homeMap.put("top20Blog" , blogdtos);
+		BlogUtil.RenderPage("index", homeMap, request, response);
 	}
 
 }

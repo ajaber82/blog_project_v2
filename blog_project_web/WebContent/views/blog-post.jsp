@@ -31,17 +31,28 @@
           </h1>
 
           
-          <div class="alert alert-info">
-            <strong>Heads up!</strong> The contact form below is fully functional. Please refer to README.md for setup instructions.
-          </div> <br />
+         <c:if test="${errorList != null}">
+			<div class="alert alert-danger">
+				<strong>Errors!</strong><br>
+				<c:forEach var="msg" items="${errorList}">
+					      ${msg}<br>
+				</c:forEach>
+			</div>
+		  </c:if>
+		  
+		  <c:if test="${message != null }">
+			<div class="alert alert-success">
+				 Success! ${message}
+			</div>
+		  </c:if>
 
-          <form id="form_sendemail">
+          <form action="${pageContext.request.contextPath}/blog/post" method="POST">
             <div class="form-group">
                 <label class="sr-only" for="txtBlogTitle">Title</label>
                 <input type="text" id="txtBlogTitle" name="txtBlogTitle" class="form-control" placeholder="Blog title">
             </div>
             <div class="form-group">
-              <label class="sr-only" for="txtBlogBody">Message</label>
+              <label class="sr-only" for="txtBlogBody">Blog body</label>
               <textarea name="txtBlogBody" class="input-lg form-control" rows="12" id="txtBlogBody" placeholder="Blog body"></textarea>
               <span class="help-block"></span>
             </div>

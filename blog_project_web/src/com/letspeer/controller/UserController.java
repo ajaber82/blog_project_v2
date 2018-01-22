@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.letspeer.blog.dao.UserDao;
 import com.letspeer.blog.dao.impl.UserDaoImpl;
 import com.letspeer.blog.model.User;
+import com.letspeer.config.BlogConstants;
 import com.letspeer.util.BlogUtil;
 import com.letspeer.util.EmailUtility;
 
@@ -71,7 +72,12 @@ public class UserController extends HttpServlet {
 		
 		if (path.endsWith("/users/logout") || path.endsWith("/users/logout/")) {
 			request.getSession().removeAttribute("user");
-			response.sendRedirect(request.getHeader("referer")) ; 
+			if(request.getHeader("referer").endsWith("/blog/post") || request.getHeader("referer").endsWith("/blog/post/")) {
+				response.sendRedirect(request.getContextPath() + "/blog/new-blog");
+			}else {
+				response.sendRedirect(request.getHeader("referer")) ; 
+			}
+			
 		}
 	}
 
@@ -203,7 +209,7 @@ public class UserController extends HttpServlet {
 				return ; 
 			}
 			
-			request.getSession().setAttribute("user", u);
+			request.getSession().setAttribute(BlogConstants.USER_SESSION_NAME, u);
 			
 			response.sendRedirect(request.getSession().getAttribute("LAST_URL").toString());
 			

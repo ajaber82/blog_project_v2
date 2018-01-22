@@ -10,6 +10,14 @@ public class User {
 	private String aboutMe;
 	private Boolean deleted;
 	private String profilePicture ; 
+	private Integer active;         //new
+	
+	public Integer getActive() {         //new
+		return active;
+	}
+	public void setActive(Integer active) {    //new
+		this.active = active;
+	}
 	public Integer getId() {
 		return id;
 	}
