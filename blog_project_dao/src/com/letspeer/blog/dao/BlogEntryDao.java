@@ -2,6 +2,7 @@ package com.letspeer.blog.dao;
 
 import java.util.List;
 
+
 import com.letspeer.blog.model.BlogEntry;
 import com.letspeer.blog.model.BlogEntryDetails;
 
@@ -22,5 +23,6 @@ public interface BlogEntryDao extends BaseDao {
 	
 	public BlogEntryDetails getBlogEntryDetailes(Integer id);
 	
+	public List<BlogEntryDetails> getBlogByCategory(Integer id);
 
 }

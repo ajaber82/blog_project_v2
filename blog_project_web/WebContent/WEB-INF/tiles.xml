@@ -34,4 +34,8 @@
         <put-attribute name="content" value="/views/blog-detail.jsp" />
     </definition>
     
+    <definition name="blogCategory" extends="base.definition">
+        <put-attribute name="content" value="/views/blog-category.jsp" />
+    </definition>
+    
 </tiles-definitions>

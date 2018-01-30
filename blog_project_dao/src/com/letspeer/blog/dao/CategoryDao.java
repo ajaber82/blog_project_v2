@@ -2,6 +2,7 @@ package com.letspeer.blog.dao;
 
 import java.util.List;
 
+
 import com.letspeer.blog.model.Category;
 
 public interface CategoryDao extends BaseDao {
@@ -16,4 +17,7 @@ public interface CategoryDao extends BaseDao {
 	public Boolean updateCategory(Category category);
 
 	public void deleteCategory(Integer id);
+	
+	
+	
 }

@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.letspeer.blog.dao.CategoryDao;
+
+import com.letspeer.blog.model.BlogEntryDetails;
 import com.letspeer.blog.model.Category;
+import com.letspeer.blog.model.Tag;
 
 public class CategoryDaoImpl implements CategoryDao {
 	private String dbUrl;
@@ -204,7 +207,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public void deleteCategory(Integer id) {
-
+	
 		Category c = getCategoryById(id);
 		// System.out.println(c.getCategoryName());
 
@@ -212,5 +215,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		updateCategory(c);
 
 	}
+
+	
 
 }

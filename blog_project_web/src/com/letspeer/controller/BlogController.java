@@ -72,13 +72,25 @@ public class BlogController extends HttpServlet {
 		if(path.contains("/detail/"))
 		{
 			String[] strArr = path.split("/");
-			System.out.println(strArr + ">>>>>>>>");
-			System.out.println(strArr[BlogConstants.BLOG_ID_PATH_LOCATION]);
 		    Integer id=Integer.parseInt(strArr[BlogConstants.BLOG_ID_PATH_LOCATION]);
  			BlogEntryDetails bed = this.blogDao.getBlogEntryDetailes(id);
  			HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
  			detailMap.put("blogDetail", bed) ;
  			BlogUtil.RenderPage("blogDetail", detailMap, request, response);
+			
+		}
+		if(path.contains("/categories/"))
+		{
+			String[] strArr = path.split("/");
+		    Integer catId=Integer.parseInt(strArr[BlogConstants.BLOG_ID_PATH_LOCATION]);
+		    String  catName= strArr[BlogConstants.BLOG_CATEGORY_lOCATION];
+ 			List<BlogEntryDetails> ls = this.blogDao.getBlogByCategory(catId);
+ 			List<Category> categories = this.categoryDao.getCategories() ; 
+ 			HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
+ 			detailMap.put("blogs", ls) ;
+ 			detailMap.put("categories", categories);
+ 			detailMap.put("categoryName", catName);
+ 			BlogUtil.RenderPage("blogCategory", detailMap, request, response);
 			
 		}
 		
