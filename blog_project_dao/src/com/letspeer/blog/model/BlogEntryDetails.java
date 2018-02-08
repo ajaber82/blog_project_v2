@@ -20,6 +20,29 @@ public class BlogEntryDetails {
 	//private HashMap<Integer, String> tags;
 	
 	private List<Tag> tags ;  
+	
+	private String blogSummary;
+	
+	public String getBlogSummary() {
+		
+		String[] strArr= blogBody.split(" ");
+		
+		if(strArr.length<=15) {
+			return String.join(" ", strArr);
+		}else {
+			String [] str2 = new String[16] ; 
+			for(int i=0;i<15;i++) {
+				str2[i] = strArr[i] ; 
+			}
+			str2[15]="..." ; 
+			
+			return String.join(" ", str2);
+		}
+			
+		
+		
+		
+	}
 
 	public Integer getId() {
 		return id;

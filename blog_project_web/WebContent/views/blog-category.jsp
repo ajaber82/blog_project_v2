@@ -39,7 +39,7 @@
 	              </h1>
 	              <ul class="blog__info">
 	                <li>
-	                  <i class="fa fa-user"></i> <a href="#">${blog.firstName}, ${blog.lastName}</a>
+	                  <i class="fa fa-user"></i> <a href="${pageContext.request.contextPath}/users/profile/${blog.firstName}-${blog.lastName}/${blog.userId}/info">${blog.firstName}, ${blog.lastName}</a>
 	                </li>
 	                <li>
 	                  <i class="fa fa-calendar"></i> <time datetime="2016-03-01">${blog.createdTime}</time>

@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.letspeer.blog.dao.BlogEntryDao;
 import com.letspeer.blog.dao.UserDao;
+import com.letspeer.blog.dao.impl.BlogEntryDaoImpl;
 import com.letspeer.blog.dao.impl.UserDaoImpl;
+import com.letspeer.blog.model.BlogEntryDetails;
+import com.letspeer.blog.model.Category;
 import com.letspeer.blog.model.User;
 import com.letspeer.config.BlogConstants;
 import com.letspeer.util.BlogUtil;
@@ -34,6 +38,7 @@ public class UserController extends HttpServlet {
 	private String smtpUserPassword ; 
 	private String smtpHost ; 
 	private String smtpPort ; 
+	private BlogEntryDao blogDao ;
 
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -41,6 +46,7 @@ public class UserController extends HttpServlet {
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 
 		dao = new UserDaoImpl(jdbcURL, jdbcUsername, jdbcPassword);
+		blogDao = new BlogEntryDaoImpl(jdbcURL, jdbcUsername, jdbcPassword);
 		
 		this.smtpHost = getServletContext().getInitParameter("host") ; 
 		this.smtpPort = System.getenv("SMTP_PORT") ; 
@@ -78,6 +84,31 @@ public class UserController extends HttpServlet {
 				response.sendRedirect(request.getHeader("referer")) ; 
 			}
 			
+		}
+		
+		if(path.contains("/profile/"))
+		{
+			//isAdmin 
+			//request.getSession().getAttribute(BlogConstants.USER_SESSION_NAME)
+			if(path.endsWith("/info") || path.endsWith("/info/")) {
+				String[] strArr = path.split("/");
+			    Integer userId=Integer.parseInt(strArr[BlogConstants.BLOG_USER_lOCATION]);
+			    User userProfile = dao.getUserById(userId);
+	 			HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
+	 			detailMap.put("userProfile", userProfile);
+	 			BlogUtil.RenderPage("blogUserProfile", detailMap, request, response);
+			}
+			
+			if(path.endsWith("/blogs") || path.endsWith("/blogs/")) {
+				String[] strArr = path.split("/");
+			    Integer userId=Integer.parseInt(strArr[BlogConstants.BLOG_USER_lOCATION]);
+			    User userProfile = dao.getUserById(userId);
+	 			List<BlogEntryDetails> ls = this.blogDao.getBlogByUser(userId);
+	 			HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
+	 			detailMap.put("blogs", ls) ;
+	 			detailMap.put("userProfile", userProfile);
+	 			BlogUtil.RenderPage("userBlogs", detailMap, request, response);
+			}
 		}
 	}
 

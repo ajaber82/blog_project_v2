@@ -24,5 +24,7 @@ public interface BlogEntryDao extends BaseDao {
 	public BlogEntryDetails getBlogEntryDetailes(Integer id);
 	
 	public List<BlogEntryDetails> getBlogByCategory(Integer id);
+	
+	public List<BlogEntryDetails> getBlogByUser(Integer id);
 
 }

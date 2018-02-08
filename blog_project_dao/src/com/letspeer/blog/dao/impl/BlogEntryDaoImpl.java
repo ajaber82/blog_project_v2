@@ -446,5 +446,107 @@ public class BlogEntryDaoImpl implements BlogEntryDao {
 
 		return blogs;
 	}
+	
+	@Override
+	public List<BlogEntryDetails> getBlogByUser(Integer id) {
+		ResultSet result = null;
+		List<BlogEntryDetails> blogs = new ArrayList<>();
+		try {
+			String query = "SELECT be.id,  " + 
+		            "       be.blog_title, " +
+					"       be.blog_body,  " + 
+					"       be.cat_id,  " + 
+					"       be.user_id,  " + 
+					"       be.deleted,  " + 
+					"       be.created_time,  " + 
+					"       c.category_name,  " + 
+					"       u.first_name,  " + 
+					"       u.last_name,  " + 
+					"       u.profile_picture,  " + 
+					"       Count(com.id)                 AS comments_count,  " + 
+					"       Group_concat(outer1.tag_id)   tag_ids,  " + 
+					"       Group_concat(outer1.tag_name) tag_names  " + 
+					"FROM   blog_entries AS be  " + 
+					"       LEFT OUTER JOIN comments com  " + 
+					"                    ON com.blog_id = be.id  " + 
+					"                       AND be.deleted = '0'  " + 
+					"       LEFT OUTER JOIN (SELECT ref.blog_id,  " + 
+					"                               ref.tag_id,  " + 
+					"                               tg.tag_name  " + 
+					"                        FROM   blog_entries_tags_ref ref,  " + 
+					"                               tags tg,  " + 
+					"                               blog_entries bee  " + 
+					"                        WHERE  bee.id = ref.blog_id  " + 
+					"                               AND tg.id = ref.tag_id) AS outer1  " + 
+					"                    ON outer1.blog_id = be.id  " + 
+					"       INNER JOIN categories c  " + 
+					"               ON be.cat_id = c.id  " + 
+					"       INNER JOIN users u  " + 
+					"               ON be.user_id = u.id  " + 
+					"WHERE  be.user_id = ? " + 
+					"GROUP  BY be.id;  ";
+			connectDb();
+			PreparedStatement pStmt = connection.prepareStatement(query);
+			pStmt.setInt(1, id);
+			
+			result = pStmt.executeQuery();
+			while (result.next()) {
+				 BlogEntryDetails bbc = new BlogEntryDetails();
+		         bbc.setBlogBody(result.getString("blog_body"));
+		         bbc.setBlogTitle(result.getString("blog_title"));
+		         bbc.setCategoryName(result.getString("category_name"));
+		         bbc.setCatId(result.getInt("cat_id"));
+		         bbc.setCommentsCount(result.getInt("comments_count"));
+		         bbc.setCreatedTime(result.getLong("created_time"));
+		         bbc.setDeleted(result.getString("deleted").equals('0') ? false : true);
+		         bbc.setFirstName(result.getString("first_name"));
+		         bbc.setId(result.getInt("id"));
+		         bbc.setLastName(result.getString("last_name"));
+		         bbc.setProfilePicture(result.getString("profile_picture"));
+		         String tagIds= result.getString("tag_ids") == null ? "":result.getString("tag_ids");
+		         String tagNames = result.getString("tag_names") == null ? "":result.getString("tag_names");
+		         List<Tag> ls = new ArrayList<Tag>() ; 
+		         
+		         if(tagIds!="" && tagNames!="") {
+		        	 String[] lsIds = tagIds.split(",") ; 
+		        	 String [] lsNames = tagNames.split(",") ; 
+		        	         	 
+		        	
+		        	 
+		        	 for(int i=0; i<lsIds.length; i++) {
+		        		 Tag tag = new Tag() ; 
+		        		 tag.setId(Integer.parseInt(lsIds[i]));
+		        		 tag.setTagName(lsNames[i]);
+		        		 ls.add(tag) ; 
+		        	 } 
+		        	 	        	 
+		         }
+		         bbc.setTags(ls);
+		         
+		         bbc.setUserId(result.getInt("user_id"));
+		         blogs.add(bbc);
+		         
+		         
+		         
+			}
+
+			return blogs;
+
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			if (result != null) {
+				try {
+					result.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			disconnectDb();
+		}
+
+		return blogs;
+	}
+
 
 }
