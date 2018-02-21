@@ -88,14 +88,30 @@ public class UserController extends HttpServlet {
 		
 		if(path.contains("/profile/"))
 		{
-			//isAdmin 
-			//request.getSession().getAttribute(BlogConstants.USER_SESSION_NAME)
+			Boolean isProfileOwner= false;
+			
+			 String[] strArr1 = path.split("/");
+			 User u =(User)request.getSession().getAttribute(BlogConstants.USER_SESSION_NAME);
+			 
+			 if(!(path.endsWith("/edit-profile/") || path.endsWith("/edit-profile"))) {
+				 Integer userIdFromPath=Integer.parseInt(strArr1[BlogConstants.BLOG_USER_lOCATION]); 
+			     if(u==null) {
+			    	 isProfileOwner=false; 
+			     }else {
+			    	 if(userIdFromPath==u.getId()) {
+			    		 isProfileOwner=true;
+			    	 }
+			    		 
+			     }
+			 }
+		     
 			if(path.endsWith("/info") || path.endsWith("/info/")) {
 				String[] strArr = path.split("/");
 			    Integer userId=Integer.parseInt(strArr[BlogConstants.BLOG_USER_lOCATION]);
 			    User userProfile = dao.getUserById(userId);
 	 			HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
 	 			detailMap.put("userProfile", userProfile);
+	 			detailMap.put("isProfileOwner", isProfileOwner);
 	 			BlogUtil.RenderPage("blogUserProfile", detailMap, request, response);
 			}
 			
@@ -107,7 +123,16 @@ public class UserController extends HttpServlet {
 	 			HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
 	 			detailMap.put("blogs", ls) ;
 	 			detailMap.put("userProfile", userProfile);
+	 			detailMap.put("isProfileOwner", isProfileOwner);
 	 			BlogUtil.RenderPage("userBlogs", detailMap, request, response);
+			}
+			
+			if(path.endsWith("/edit-profile") || path.endsWith("/edit-profile/")) {
+				if(u!=null) {
+					HashMap<String, Object> detailMap = new HashMap<String, Object>() ; 
+		 			detailMap.put("userProfile", u);
+		 			BlogUtil.RenderPage("blogEditTab", detailMap, request, response);	
+				}
 			}
 		}
 	}
@@ -123,6 +148,7 @@ public class UserController extends HttpServlet {
 		String email = request.getParameter("txtEmail");
 		String password = request.getParameter("txtPassword");
 		String passwordConfirm = request.getParameter("txtConfirmPassword");
+		//String aboutMe = request.getParameter("txtAboutMe");
 		List<String> errorList = new ArrayList<String>();
 		String path = request.getRequestURI();
 		if (path.endsWith("/users/register") || path.endsWith("/users/register/")) {
@@ -174,6 +200,7 @@ public class UserController extends HttpServlet {
 
 			User u = new User();
 			u.setAboutMe("");
+			//u.setAboutMe(aboutMe);
 			u.setDeleted(false);
 			u.setEmail(email);
 			u.setFirstName(firstName);

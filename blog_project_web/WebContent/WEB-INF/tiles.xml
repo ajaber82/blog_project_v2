@@ -39,11 +39,15 @@
     </definition>
     
      <definition name="blogUserProfile" extends="base.definition">
-        <put-attribute name="content" value="/views/blog-user-profile.jsp" />
+        <put-attribute name="content" value="/views/user-profile.jsp" />
     </definition>
     
      <definition name="userBlogs" extends="base.definition">
         <put-attribute name="content" value="/views/user-blogs.jsp" />
+    </definition>
+
+    <definition name="blogEditTab" extends="base.definition">
+        <put-attribute name="content" value="/views/edit-user-profile.jsp" />
     </definition>
     
     

@@ -19,19 +19,22 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar_main">
 
-          <ul class="nav navbar-nav navbar-left">
+       
+                  <ul class="nav navbar-nav navbar-left">
+        
             <li><a href="index.html">Home</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="edit-profile.html">Edit Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/users/profile/${userProfile.firstName}-${userProfile.lastName}/${userProfile.id}/info">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/users/profile/${userProfile.firstName}-${userProfile.lastName}/${userProfile.id}/edit">Edit Profile</a></li>
                 <li><a href="inbox.html">Inbox</a></li>
                 <li><a href="inbox-dialog.html">Inbox: Dialog</a></li>
-                <li><a href="sign-in.html">Sign In</a></li>
-                <li><a href="sign-up.html">Sign Up</a></li>
+                <li><a href="${pageContext.request.contextPath}/users/login">Sign In</a></li>
+                <li><a href="${pageContext.request.contextPath}/users/register">Sign Up</a></li>
               </ul>
             </li>
+     
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -77,8 +80,8 @@
 	          		    <li class="dropdown">
 			              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome ${sessionScope.user.firstName}, ${sessionScope.user.lastName} <span class="caret"></span></a>
 			              <ul class="dropdown-menu">
-			                <li><a href="about-us.html">Profile</a></li>
-			                <li><a href="contact.html">Edit my profile</a></li>
+			                <li><a href="${pageContext.request.contextPath}/users/profile/${sessionScope.user.firstName}-${sessionScope.user.lastName}/${sessionScope.user.id}/info">Profile</a></li>
+			                <li><a href="${pageContext.request.contextPath}/users/profile/edit-profile">Edit my profile</a></li>
 			                <li><a href="${pageContext.request.contextPath}/blog/new-blog">Post new blog</a></li>
 			                <li><a href="${pageContext.request.contextPath}/users/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 			              </ul>

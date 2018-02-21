@@ -4,17 +4,16 @@
     <div class="page-topbar">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
 
-            <h3>${userProfile.firstName} ${userProfile.lastName} Blogs</h3>
+            <h3>${userProfile.firstName} ${userProfile.lastName} Profile</h3>
             
           </div>
-          <div class="col-sm-6 hidden-xs">
+          <div class="col-sm-8 hidden-xs">
             
             <ol class="breadcrumb">
               <li><a href="#">Home</a></li>
-              <li><a href="#">Profile</a></li>
-              <li class="active">${userProfile.firstName} ${userProfile.lastName} Blogs</li>
+              <li class="active">${userProfile.firstName} ${userProfile.lastName} Profile</li>
             </ol>
 
           </div>
@@ -61,24 +60,23 @@
           <!-- Profile nav -->
           <nav class="clearfix">
             <ul class="profile__nav">
-              <li>
+              <li class="active">
                 <a href="${pageContext.request.contextPath}/users/profile/${userProfile.firstName}-${userProfile.lastName}/${userProfile.id}/info">
                   <i class="fa fa-user"></i> Profile
                 </a>
               </li>
-              
-              <li class="active">
+                <li>
                 <a href="${pageContext.request.contextPath}/users/profile/${userProfile.firstName}-${userProfile.lastName}/${userProfile.id}/blogs">
-                 <i class="fa fa-file-text-o"></i> Blogs
+                  <i class="fa fa-file-text-o"></i> Blogs
                 </a>
               </li>
               <c:if test="${isProfileOwner}">
-	              <li>
+	               <li>
 	                <a href="${pageContext.request.contextPath}/users/profile/edit-profile">
 	                  <i class="fa fa-edit"></i> Edit
 	                </a>
 	              </li>
-	           
+	            
 	              <li>
 	                <a href="${pageContext.request.contextPath}/users/logout">
 	                  <i class="fa fa-sign-out"></i> Logout
@@ -89,58 +87,29 @@
           </nav>
             
           <div class="profile__body">
-  
-            <!-- Messages -->
+
             <h1 class="block-header alt">
-              <span>${userProfile.firstName} ${userProfile.lastName} Blogs</span>
+              <span>About ${userProfile.firstName} ${userProfile.lastName}</span>
             </h1>
-            <div class="table-responsive">
-              <table class="table table-hover profile__inbox">
-                <tbody>
-                <c:forEach var="blog" items="${blogs}">
-                  <tr>
-                  
-                    <td>
-                      <div class="profile-inbox__img">
-                        <img src="assets/img/person_1.jpg" class="img-responsive" alt="...">
-                      </div>
-                    </td>
-                    <td>
-                       <a href="${pageContext.request.contextPath}/blog/${blog.id}/detail/${blog.blogTitle}">${blog.blogTitle}</a> <br />
-                      ${blog.createdTime}
-                    </td>
-                    <td>
-                      <a href="inbox-dialog.html">
-                       ${blog.blogSummary}
-                      </a>
-                    </td>
-                  </tr>
-                  </c:forEach>
+            <p class="text-muted">
+	             <c:choose>
+				    <c:when test="${empty userProfile.aboutMe}">
+				        There is no information about ${userProfile.firstName}  ${userProfile.lastName}.
+				    </c:when>
+				    <c:otherwise>
+				        ${userProfile.aboutMe}
+				    </c:otherwise>
+				</c:choose>
+            </p>
+           
 
-                </tbody>
-              </table>
-            </div> <!-- / .table-responsive -->
+            <h1 class="block-header alt">
+              <span>User Email</span>
+            </h1>
+            <p class="text-muted">
+            	${userProfile.email}
+            </p>
 
-            <!-- Pagination -->
-            <nav class="text-right">
-              <ul class="pagination">
-                <li class="disabled">
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                  <a href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-                </li>
-              </ul>
-            </nav>
 
           </div> <!-- / .profile__body -->
 
