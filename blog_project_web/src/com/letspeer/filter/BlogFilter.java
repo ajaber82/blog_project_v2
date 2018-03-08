@@ -50,7 +50,7 @@ public class BlogFilter implements Filter {
 	   }
 	   
 
-	   if(path.endsWith("/blog/new-blog") || path.endsWith("/users/profile/edit-profile")) {
+	   if(path.endsWith("/blog/new-blog") || path.endsWith("/users/profile/edit-profile") ||  path.endsWith("/users/profile/update-profile")) {
 		   if(servletRquest.getSession().getAttribute(BlogConstants.USER_SESSION_NAME) == null) {
 			   servletResponse.sendRedirect(servletRquest.getContextPath() + "/users/login");
 		   }

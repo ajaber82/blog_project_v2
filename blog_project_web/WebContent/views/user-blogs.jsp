@@ -31,7 +31,7 @@
           <div class="profile__aside">
           
             <div class="profile__img">
-              <img src="assets/img/person_1.jpg" class="img-responsive" alt="...">
+              <img src="/medias/profile-picture/${profilePicture}" class="img-responsive" alt="...">
             </div>
 
             <h4 class="profile__name">${userProfile.firstName} ${userProfile.lastName}</h4>

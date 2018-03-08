@@ -30,7 +30,7 @@
           <div class="profile__aside">
           
             <div class="profile__img">
-              <img src="assets/img/person_1.jpg" class="img-responsive" alt="...">
+              <img src="/medias/profile-picture/${profilePicture}" class="img-responsive" alt="...">
             </div>
 
             <h4 class="profile__name">${userProfile.firstName} ${userProfile.lastName} <small>Administrator</small></h4>
@@ -91,12 +91,8 @@
               <span>Edit profile</span>
             </h1>
 
-            <p class="text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ex illo totam. Magnam atque quidem ipsum. Nihil reiciendis sit temporibus eius. Beatae doloribus sapiente earum iusto hic labore porro facilis.
-            </p><br>
-
-
-            <form action="${pageContext.request.contextPath}/users/profile/${userProfile.firstName}-${userProfile.lastName}/${userProfile.id}/edit" method="POST">
+            
+            <form action="${pageContext.request.contextPath}/users/profile/update-profile" enctype="multipart/form-data" method="POST">
 
               <div class="form-group">
                 <label class="sr-only">First name</label>
@@ -105,38 +101,24 @@
               
               <div class="form-group">
                 <label class="sr-only">Last name</label>
-                <input name="txtLastName" type="text" required class="form-control input-lg" placeholder="Last name">
+                <input name="txtLastName" type="text"  value="${userProfile.lastName}" required class="form-control input-lg" placeholder="Last name">
               </div>
-                           
-              <div class="form-group">
-                <label class="sr-only">Email address</label>
-                <input name="txtEmail" type="text" required class="form-control input-lg" placeholder="Email address">
-              </div>
-              
-              <div class="form-group">
-                <label class="sr-only">Password</label>
-                <input name="txtPassword" type="password" required class="form-control input-lg" placeholder="Password">
-              </div>
-             
-              <div class="form-group">
-                <label class="sr-only">Repeat password</label>
-                <input name="txtConfirmPassword" type="password" required class="form-control input-lg" placeholder="Repeat password">
-              </div>
-              
+                         
+                         
               <div class="form-group">
                 <label class="sr-only">About me</label>
-                <input name="txtAboutMe" type="text" required class="form-control input-lg" placeholder="About me">
+                <textarea name="txtAboutMe" class="input-lg form-control" rows="12" id="txtAboutMe" placeholder="About me" ><c:out value="${userProfile.aboutMe}"/></textarea>
+                <span class="help-block"></span>
+              </div>
+              
+               <div class="form-group">
+                <label class="sr-only">Profile Picture</label>
+                <input name="filePicture" type="file" class="form-control input-lg" placeholder="Last name">
               </div>
           
-              <div class="checkbox"><br>
-                <input type="checkbox" id="profile-form__notifications" value="">
-                <label for="profile-form__notifications">
-                  I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                </label>
-              </div><br>
-              
+                      
               <button type="submit" class="btn btn-primary">
-                Save changes
+                Update
               </button>
 
             </form>
