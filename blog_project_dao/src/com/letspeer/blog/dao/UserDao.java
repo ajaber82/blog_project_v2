@@ -13,7 +13,8 @@ public interface UserDao extends BaseDao {
 	public Boolean updateUser(User user) ; 
 	public void deleteUser(Integer id) ;
 	public User getUserByEmail(String email); 
-	//public boolean changeUserPassword(Integer userId, String password);
+	public Boolean updateUserProfile(Integer id, String firstName,String lastName,String profilePicture,String aboutMe);
+	//public Boolean changeUserPassword(Integer userId, String password);
 	
 
 }

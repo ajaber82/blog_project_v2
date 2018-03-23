@@ -139,50 +139,6 @@ public class UserDaoImpl implements UserDao {
 		return null;
 	}
 	
-	
-	@Override
-	public User getUserByEmail(String email) {
-		ResultSet result = null;
-		System.out.println("<<<<<< In GET USER BY EMAIL >>>>" + email);
-		try {
-			String query = "SELECT * FROM users WHERE email=? AND deleted='0'";
-			connectDb();
-			PreparedStatement pStmt = connection.prepareStatement(query);
-			pStmt.setString(1, email);
-			result = pStmt.executeQuery();
-			if (result.next()) {
-				User user = new User();
-				user.setAboutMe(result.getString("about_me"));
-				user.setDeleted(result.getString("deleted").equals('0') ? false : true);
-				user.setEmail(result.getString("email"));
-				user.setFirstName(result.getString("first_name"));
-				user.setId(result.getInt("id"));
-				user.setLastName(result.getString("last_name"));
-				user.setProfilePicture(result.getString("profile_picture"));
-				String pwd = result.getString("password") ; 
-				System.out.println(pwd + ">>>>>>>>> !");
-				user.setPassword(pwd);
-				return user;
-
-			} else {
-				return null;
-			}
-
-		} catch (Exception exp) {
-			exp.printStackTrace();
-		} finally {
-			if (result != null) {
-				try {
-					result.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			disconnectDb();
-		}
-
-		return null;
-	}
 
 
 	@Override
@@ -252,6 +208,81 @@ public class UserDaoImpl implements UserDao {
 				pStmt.setString(7, "0");
 			}
 			pStmt.setInt(8, user.getId());
+			Boolean result = pStmt.execute();
+			return result;
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			disconnectDb();
+		}
+
+		return false;
+	}
+	
+	
+	@Override
+	public User getUserByEmail(String email) {
+		ResultSet result = null;
+		System.out.println("<<<<<< In GET USER BY EMAIL >>>>" + email);
+		try {
+			String query = "SELECT * FROM users WHERE email=? AND deleted='0'";
+			connectDb();
+			PreparedStatement pStmt = connection.prepareStatement(query);
+			pStmt.setString(1, email);
+			result = pStmt.executeQuery();
+			if (result.next()) {
+				User user = new User();
+				user.setAboutMe(result.getString("about_me"));
+				user.setDeleted(result.getString("deleted").equals('0') ? false : true);
+				user.setEmail(result.getString("email"));
+				user.setFirstName(result.getString("first_name"));
+				user.setId(result.getInt("id"));
+				user.setLastName(result.getString("last_name"));
+				user.setProfilePicture(result.getString("profile_picture"));
+				String pwd = result.getString("password") ; 
+				System.out.println(pwd + ">>>>>>>>> !");
+				user.setPassword(pwd);
+				return user;
+
+			} else {
+				return null;
+			}
+
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			if (result != null) {
+				try {
+					result.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			disconnectDb();
+		}
+
+		return null;
+	}
+
+	
+	@Override
+	public Boolean updateUserProfile(Integer id,String firstName,String lastName,String profilePicture,String aboutMe){
+		
+		try {
+
+			String stmt = "UPDATE users SET "
+					+ "first_name=? ,last_name=?,profile_picture=?,about_me=? "
+					+ "WHERE id=?";
+			connectDb();
+			PreparedStatement pStmt = connection.prepareStatement(stmt);
+			pStmt.setString(1,firstName);
+			pStmt.setString(2,lastName);
+			pStmt.setString(3,profilePicture);
+			pStmt.setString(4,aboutMe);
+			pStmt.setInt(5, id);
+			
+			
+			//result = pStmt.executeQuery();
 			Boolean result = pStmt.execute();
 			return result;
 		} catch (Exception exp) {

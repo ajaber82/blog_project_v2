@@ -86,22 +86,32 @@
           </nav>
             
           <div class="profile__body">
+          
 
             <h1 class="block-header alt">
               <span>Edit profile</span>
             </h1>
+            
+            <c:if test="${errorList != null}">
+					<div class="alert alert-danger">
+					  <strong>Errors!</strong><br>
+					  <c:forEach var="msg" items="${errorList}">
+					      ${msg}<br>
+					  </c:forEach>
+					</div>
+			</c:if>
 
             
             <form action="${pageContext.request.contextPath}/users/profile/update-profile" enctype="multipart/form-data" method="POST">
 
               <div class="form-group">
                 <label class="sr-only">First name</label>
-                <input name="txtFirstName" type="text"  value="${userProfile.firstName}" required class="form-control input-lg" placeholder="First name">
+                <input name="txtFirstName" type="text"  value="${userProfile.firstName}"  class="form-control input-lg" placeholder="First name">
               </div>
               
               <div class="form-group">
                 <label class="sr-only">Last name</label>
-                <input name="txtLastName" type="text"  value="${userProfile.lastName}" required class="form-control input-lg" placeholder="Last name">
+                <input name="txtLastName" type="text"  value="${userProfile.lastName}"  class="form-control input-lg" placeholder="Last name">
               </div>
                          
                          
